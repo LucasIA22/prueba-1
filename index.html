@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Para Ti 💖</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      font-family: 'Comic Sans MS', cursive;
+      cursor: crosshair;
+    }
+
+    .tkm {
+      position: absolute;
+      color: #ff69b4;
+      font-weight: bold;
+      text-shadow: 0 0 10px #ffb6c1, 0 0 20px #ff69b4;
+      animation: fall 3s ease-in-out forwards;
+      opacity: 0.85;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0px) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100px) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    .corazon {
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      background: #ff1493;
+      transform: rotate(-45deg);
+      animation: flotar 2s ease-out forwards;
+      opacity: 0.9;
+      z-index: 10;
+    }
+
+    .corazon::before,
+    .corazon::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      background: #ff1493;
+      border-radius: 50%;
+    }
+
+    .corazon::before {
+      top: -50px;
+      left: 0;
+    }
+
+    .corazon::after {
+      left: 50px;
+      top: 0;
+    }
+
+    .texto {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 40%;
+      left: 0;
+      transform: rotate(45deg); 
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      font-family: sans-serif;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    @keyframes flotar {
+      0% {
+        transform: rotate(-45deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: rotate(-45deg) translateY(-150px) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<audio id="musica" src="music/Lejos_De_Ti.mp3" preload="auto" loop controls></audio>
+
+<script>
+  
+  let musicaIniciada = false;
+  function iniciarMusica() {
+    if (!musicaIniciada) {
+      const musica = document.getElementById('musica');
+      musica.volume = 1.0;
+      musica.play()
+        .then(() => console.log('Música reproducida'))
+        .catch(err => console.log('Error al reproducir música:', err));
+      musicaIniciada = true;
+    }
+  }
+  document.addEventListener('click', iniciarMusica);
+  document.addEventListener('mousemove', iniciarMusica);
+
+  
+  document.addEventListener('mousemove', (e) => {
+    const tkm = document.createElement('div');
+    tkm.className = 'tkm';
+    tkm.innerText = 'tkm';
+    tkm.style.left = (e.clientX + Math.random() * 20 - 10) + 'px';
+    tkm.style.top = (e.clientY + Math.random() * 20 - 10) + 'px';
+    tkm.style.fontSize = (Math.random() * 20 + 20) + 'px';
+    document.body.appendChild(tkm);
+    setTimeout(() => tkm.remove(), 3000);
+  });
+
+  
+  document.addEventListener('click', (e) => {
+    const corazon = document.createElement('div');
+    corazon.className = 'corazon';
+    corazon.style.left = (e.clientX - 50) + 'px';
+    corazon.style.top = (e.clientY - 45) + 'px';
+
+    const texto = document.createElement('div');
+    texto.className = 'texto';
+    texto.innerText = 'LINA';
+
+    corazon.appendChild(texto);
+    document.body.appendChild(corazon);
+    setTimeout(() => corazon.remove(), 2000);
+  });
+</script>
+
+</body>
+</html>
